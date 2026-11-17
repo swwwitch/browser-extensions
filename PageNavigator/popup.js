@@ -1,9 +1,13 @@
 // Page Navigator の設定（chrome.storage.sync。content.js と同じ形）
 const DEFAULTS = { edge: true, rail: true, minimap: true, jump: true, jk: false, disabledHosts: [] };
 const isMac = /Mac/.test(navigator.platform || navigator.userAgent);
-document.getElementById('combo').innerHTML = isMac
-  ? '<kbd>⌘</kbd><kbd>⌥</kbd><kbd>↓</kbd> 次の見出し ／ <kbd>⌘</kbd><kbd>⌥</kbd><kbd>↑</kbd> 前の見出し'
-  : '<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↓</kbd> 次の見出し ／ <kbd>↑</kbd> 前の見出し';
+// キーの説明（innerHTML を使わずに組み立てる。Firefox のアドオンの審査で指摘されないように）
+{
+  const combo = document.getElementById('combo');
+  const kbd = t => { const k = document.createElement('kbd'); k.textContent = t; return k; };
+  if (isMac) combo.append(kbd('⌘'), kbd('⌥'), kbd('↓'), ' 次の見出し ／ ', kbd('⌘'), kbd('⌥'), kbd('↑'), ' 前の見出し');
+  else combo.append(kbd('Alt'), '+', kbd('Shift'), '+', kbd('↓'), ' 次の見出し ／ ', kbd('↑'), ' 前の見出し');
+}
 
 chrome.storage.sync.get(DEFAULTS, cfg => {
   document.querySelectorAll('input[data-key]').forEach(box => {

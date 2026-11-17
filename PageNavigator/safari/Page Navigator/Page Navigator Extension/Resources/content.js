@@ -27,7 +27,7 @@
   const rootEl = document.createElement('page-navigator-root');
   rootEl.style.cssText = 'all:initial;position:fixed;left:0;top:0;width:0;height:0;z-index:2147483646;';
   const sh = rootEl.attachShadow({ mode: 'open' });
-  sh.innerHTML = `<style>
+  const styleEl = document.createElement('style'); styleEl.textContent = `
     :host{all:initial}
     *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",sans-serif}
     .edge{position:fixed;left:0;right:0;height:30px;display:none;align-items:center;justify-content:center;gap:6px;border:0;margin:0;padding:0;cursor:pointer;font-size:13px;font-weight:700;color:#fff;background:rgba(24,43,60,.82);backdrop-filter:blur(4px);z-index:3}
@@ -50,7 +50,7 @@
     .toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);max-width:min(560px,90vw);padding:6px 14px;border-radius:999px;background:rgba(24,43,60,.9);color:#fff;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .2s;pointer-events:none;z-index:4}
     .toast.on{opacity:1}
     @media (prefers-color-scheme: dark){.map{background:rgba(26,31,35,.94)}.tick::before{background:#c7d2db}}
-  </style>`;
+  `; sh.append(styleEl);
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const mount = () => { if (!rootEl.isConnected && document.documentElement) document.documentElement.append(rootEl); };
 

@@ -49,7 +49,7 @@
 | Firefox | `PageNavigator-firefox-版.zip` | addons.mozilla.org への提出（manifest に Firefox 用の ID を足す） |
 | Safari | `Page Navigator.app`・`PageNavigator-safari-版.zip` | Xcode のプロジェクト（`safari/`）の Resources を同期してビルド・署名 |
 
-Chrome ウェブストアへの提出の手順・掲載情報・権限の説明は `store/LISTING.md`、スクリーンショット（1280×800）とプロモーション タイル（440×280）は `store/` にあります（スクリーンショットは `node tools/screenshots.mjs` で作り直せます）。
+Chrome ウェブストアへの提出の手順・掲載情報・権限の説明は `store/LISTING.md`、Firefox のアドオン（AMO）は `store/AMO.md`、スクリーンショット（1280×800）とプロモーション タイル（440×280）は `store/` にあります（スクリーンショットは `node tools/screenshots.mjs` で作り直せます）。
 
 版は `manifest.json` の `version` だけを書き換えます（Firefox の manifest と Safari のアプリの版は、書き出すときにそろえます）。
 
@@ -63,3 +63,4 @@ Chrome ウェブストアへの提出の手順・掲載情報・権限の説明�
 #### 1.0.0（2026-11-18）
 - 最初の版。エレベーター・ミニマップ・上下の帯・見出しのジャンプ、ポップアップの設定
 - Firefox 版・Safari 版（`tools/build.sh`）。プライバシーポリシー（PRIVACY.md）
+- ストアに出すための掲載情報・スクリーンショット（`store/`）。Firefox の審査に合わせて innerHTML を使わない形に

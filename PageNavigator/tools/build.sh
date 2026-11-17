@@ -29,7 +29,7 @@ for t in $TARGETS; do
 import json,sys
 m=json.load(open('manifest.json'))
 # Firefox：アドオンの ID（署名・同期に必要）と、全サイトへのアクセス（MV3 では host_permissions に書く）
-m['browser_specific_settings']={'gecko':{'id':'page-navigator@swwwitch','strict_min_version':'121.0','data_collection_permissions':{'required':['none']}}}
+m['browser_specific_settings']={'gecko':{'id':'page-navigator@swwwitch','strict_min_version':'140.0','data_collection_permissions':{'required':['none']}}}
 m['host_permissions']=['http://*/*','https://*/*','file:///*']
 open(sys.argv[1],'w').write(json.dumps(m,ensure_ascii=False,indent=2)+'\n')
 EOF
