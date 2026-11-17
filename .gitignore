@@ -2,3 +2,6 @@
 *.zip
 *.crx
 *.pem
+build/
+xcuserdata/
+*.xcuserstate

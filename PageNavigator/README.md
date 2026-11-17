@@ -1,4 +1,4 @@
-# Page Navigator（Google Chrome の拡張機能）
+# Page Navigator（Chrome・Firefox・Safari の拡張機能）
 
 どのページでも、長いページの中を移動しやすくする拡張機能です。ceebeedee.space の「エレベーター」「ミニマップ」「トップ／ボトムバー」「見出しのジャンプ」を、ほかのサイトでも使えるようにしたものです。
 
@@ -22,12 +22,34 @@
 
 ### 入れ方（開発版）
 
-1. Chrome で `chrome://extensions` を開きます。
-2. 右上の［デベロッパー モード］をオンにします。
-3. ［パッケージ化されていない拡張機能を読み込む］を押し、このフォルダー（PageNavigator）を選びます。
-4. ツールバーのパズルのアイコンから、Page Navigator をピン留めします。
+**Google Chrome**（Microsoft Edge・Arc なども同じ）
+1. `chrome://extensions` を開き、右上の［デベロッパー モード］をオンにします。
+2. ［パッケージ化されていない拡張機能を読み込む］を押し、このフォルダー（PageNavigator）を選びます。
+3. ツールバーのパズルのアイコンから、Page Navigator をピン留めします。
 
-ファイルを書き換えたら、`chrome://extensions` の Page Navigator の［再読み込み］を押し、開いているページも再読み込みします。
+**Firefox**
+1. `tools/build.sh firefox` で `build/firefox/` を作ります。
+2. `about:debugging#/runtime/this-firefox` を開き、［一時的なアドオンを読み込む］で `build/firefox/manifest.json` を選びます（Firefox を終了すると外れます）。
+
+**Safari（Mac）**
+1. `tools/build.sh safari` で `build/Page Navigator.app` を作ります。
+2. アプリを一度開き、［終了して、Safariの設定を開く］を押します。
+3. Safari の設定の「機能拡張」で Page Navigator をオンにし、「すべての Web サイト」で許可します。
+4. 自分で署名したアプリなので、ほかの Mac では Safari の［開発］メニューの「未署名の機能拡張を許可」が必要です（配布するには公証が要ります）。
+
+ファイルを書き換えたら、各ブラウザーで拡張機能を再読み込みし、開いているページも再読み込みします。
+
+### 書き出し
+
+`tools/build.sh`（引数なしで3つとも。`chrome`・`firefox`・`safari` で個別に）。`build/` に次のものを作ります。
+
+| ブラウザー | 書き出すもの | 用途 |
+|---|---|---|
+| Chrome | `PageNavigator-chrome-版.zip` | Chrome ウェブストアへの提出 |
+| Firefox | `PageNavigator-firefox-版.zip` | addons.mozilla.org への提出（manifest に Firefox 用の ID を足す） |
+| Safari | `Page Navigator.app`・`PageNavigator-safari-版.zip` | Xcode のプロジェクト（`safari/`）の Resources を同期してビルド・署名 |
+
+版は `manifest.json` の `version` だけを書き換えます（Firefox の manifest と Safari のアプリの版は、書き出すときにそろえます）。
 
 ### 制限
 
@@ -38,3 +60,4 @@
 
 #### 1.0.0（2026-11-18）
 - 最初の版。エレベーター・ミニマップ・上下の帯・見出しのジャンプ、ポップアップの設定
+- Firefox 版・Safari 版（`tools/build.sh`）。プライバシーポリシー（PRIVACY.md）
