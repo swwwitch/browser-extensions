@@ -31,7 +31,7 @@
 - サポートサイト：https://github.com/swwwitch/chrome-extensions/issues
 - サポート用メールアドレス：空欄でよい（入れると公開される）
 
-**ライセンス**：未定（下の「決めること」）
+**ライセンス**：MIT License（一覧の［MIT License］を選ぶ。リポジトリの `LICENSE` と同じ）
 
 **プライバシー ポリシー**：データを集めないので任意。入れるなら `PRIVACY.md` の内容を貼る。
 
@@ -50,8 +50,3 @@ Page Navigator adds in-page navigation aids (heading ticks on the left edge, a m
 Source: https://github.com/swwwitch/chrome-extensions/tree/main/PageNavigator
 ```
 
----
-
-## 決めること
-
-- **ライセンス**：AMO では一覧から選ぶ必要がある。おすすめは MIT（誰でも使え、改変・再配布もできる。著作権表示だけ残す）。選んだら、リポジトリにも同じ LICENSE を置く。
