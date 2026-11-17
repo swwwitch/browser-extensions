@@ -70,8 +70,8 @@ Stops below sticky headers, ignores keys while you type, and keeps its UI isolat
 | スクリーンショット（1280×800） | `store/screenshots/rail.png`・`minimap.png`・`jump.png`・`edge.png`（この順） |
 | 小さいプロモーション タイル（440×280） | `store/promo-440x280.png` |
 
-**ウェブサイト**：https://github.com/swwwitch/chrome-extensions
-**サポート**：https://github.com/swwwitch/chrome-extensions/issues
+**ウェブサイト**：https://github.com/swwwitch/browser-extensions
+**サポート**：https://github.com/swwwitch/browser-extensions/issues
 
 ---
 
@@ -95,7 +95,7 @@ Stops below sticky headers, ignores keys while you type, and keeps its UI isolat
 - アイテムの単一用途と関係のない目的で、ユーザーデータを使用または転送しない
 - 信用度の判断や融資の目的で、ユーザーデータを使用または転送しない
 
-**プライバシー ポリシーの URL**：https://github.com/swwwitch/chrome-extensions/blob/main/PageNavigator/PRIVACY.md
+**プライバシー ポリシーの URL**：https://github.com/swwwitch/browser-extensions/blob/main/PageNavigator/PRIVACY.md
 
 ---
 

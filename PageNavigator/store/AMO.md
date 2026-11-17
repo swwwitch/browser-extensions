@@ -28,7 +28,7 @@
 **タグ**：navigation、headings、minimap、scroll、productivity
 
 **サポート**
-- サポートサイト：https://github.com/swwwitch/chrome-extensions/issues
+- サポートサイト：https://github.com/swwwitch/browser-extensions/issues
 - サポート用メールアドレス：空欄でよい（入れると公開される）
 
 **ライセンス**：MIT License（一覧の［MIT License］を選ぶ。リポジトリの `LICENSE` と同じ）
@@ -47,6 +47,6 @@ Page Navigator adds in-page navigation aids (heading ticks on the left edge, a m
 - No network requests and no data collection. Settings are stored with storage.sync only.
 - The content script runs on all pages because it reads heading positions on the current page; nothing is stored or transmitted.
 - UI is rendered inside a Shadow DOM so it does not affect page styles.
-Source: https://github.com/swwwitch/chrome-extensions/tree/main/PageNavigator
+Source: https://github.com/swwwitch/browser-extensions/tree/main/PageNavigator
 ```
 

@@ -3,7 +3,9 @@
 #   tools/build.sh            … 3つとも
 #   tools/build.sh chrome     … Chrome（Chrome ウェブストアに出す zip）
 #   tools/build.sh firefox    … Firefox（addons.mozilla.org に出す zip。manifest に gecko の ID を足す）
-#   tools/build.sh safari     … Safari（Xcode のプロジェクトの Resources を同期して、アプリをビルド・署名）
+#   tools/build.sh safari     … Safari（Xcode のプロジェクトの Resources を同期して、アプリをビルド・署名。手元で使う版）
+#   tools/build.sh appstore   … Mac App Store に出す .pkg（ビルド番号を1つ上げて、アーカイブ→書き出し。store/APPSTORE.md）
+#   tools/build.sh appstore upload … 書き出さずに App Store Connect へ送る
 # ソースは PageNavigator の直下（manifest.json は Chrome 用。Chrome はこのフォルダーをそのまま読み込める）
 set -e
 cd "${0:A:h}/.."
@@ -11,6 +13,7 @@ ROOT=$PWD
 VERSION=$(python3 -c 'import json;print(json.load(open("manifest.json"))["version"])')
 FILES=(content.js popup.html popup.js icons)
 OUT=$ROOT/build
+UPLOAD=0; [[ $1 == appstore && $2 == upload ]] && { UPLOAD=1; set -- appstore; }
 if (( $# )); then TARGETS=($@); else TARGETS=(chrome firefox safari); fi
 mkdir -p $OUT
 
@@ -54,7 +57,6 @@ EOF
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>com.apple.security.app-sandbox</key><true/>
-<key>com.apple.security.files.user-selected.read-only</key><true/>
 </dict></plist>
 EOF
     codesign --force --sign "$IDENTITY" --timestamp=none --entitlements "$ENT" "$APP/Contents/PlugIns/Page Navigator Extension.appex"
@@ -64,6 +66,37 @@ EOF
     (cd $OUT && ditto -c -k --keepParent "Page Navigator.app" "PageNavigator-safari-$VERSION.zip")
     echo "safari:  build/Page Navigator.app（build/PageNavigator-safari-$VERSION.zip）"
     ;;
-  *) echo "不明な対象：$t（chrome・firefox・safari）"; exit 1;;
+  appstore)
+    PROJ="$ROOT/safari/Page Navigator"
+    XCPROJ="$PROJ/Page Navigator.xcodeproj/project.xcproj"
+    RES="$PROJ/Page Navigator Extension/Resources"
+    rm -rf "$RES"; mkdir -p "$RES"
+    cp -R manifest.json $FILES "$RES/"
+    sed -i '' -E "s/\"MARKETING_VERSION\": \"[^\"]*\"/\"MARKETING_VERSION\": \"$VERSION\"/g" "$XCPROJ"
+    # ビルド番号を1つ上げる（App Store Connect には同じ番号を2回送れない）
+    BUILD=$(( $(grep -m1 -oE '"CURRENT_PROJECT_VERSION": "[0-9]+"' "$XCPROJ" | grep -oE '[0-9]+') + 1 ))
+    sed -i '' -E "s/\"CURRENT_PROJECT_VERSION\": \"[0-9]+\"/\"CURRENT_PROJECT_VERSION\": \"$BUILD\"/g" "$XCPROJ"
+    ARCHIVE="$OUT/PageNavigator-$VERSION-$BUILD.xcarchive"; rm -rf "$ARCHIVE"
+    # 自動署名（Xcode にサインインしているアカウントで、App ID・プロファイルを作る・更新する）
+    xcodebuild -project "$PROJ/Page Navigator.xcodeproj" -scheme "Page Navigator" -configuration Release \
+      -destination 'generic/platform=macOS' -archivePath "$ARCHIVE" -allowProvisioningUpdates archive >"$OUT/appstore-archive.log" 2>&1 || { tail -30 "$OUT/appstore-archive.log"; exit 1; }
+    DEST=export; (( UPLOAD )) && DEST=upload
+    cat >"$OUT/ExportOptions.plist" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>method</key><string>app-store-connect</string>
+<key>destination</key><string>$DEST</string>
+<key>teamID</key><string>PL9S9PXX96</string>
+<key>signingStyle</key><string>automatic</string>
+<key>manageAppVersionAndBuildNumber</key><false/>
+</dict></plist>
+PLIST
+    rm -rf "$OUT/appstore"
+    xcodebuild -exportArchive -archivePath "$ARCHIVE" -exportPath "$OUT/appstore" -exportOptionsPlist "$OUT/ExportOptions.plist" -allowProvisioningUpdates >"$OUT/appstore-export.log" 2>&1 || { tail -30 "$OUT/appstore-export.log"; exit 1; }
+    if (( UPLOAD )); then echo "appstore: $VERSION ($BUILD) を App Store Connect へ送りました"
+    else echo "appstore: build/appstore/Page Navigator.pkg（$VERSION ($BUILD)）"; fi
+    ;;
+  *) echo "不明な対象：$t（chrome・firefox・safari・appstore）"; exit 1;;
   esac
 done

@@ -16,4 +16,4 @@ Page Navigator helps you move within the page you are viewing (jump between head
 - **Storage**: Only your settings (feature on/off and the sites you disabled) are saved in the browser's extension storage (chrome.storage.sync), which may sync across your devices if browser sync is on.
 - **Network**: No network requests. No ads or analytics.
 
-Contact: https://github.com/swwwitch/chrome-extensions/issues
+Contact: https://github.com/swwwitch/browser-extensions/issues
