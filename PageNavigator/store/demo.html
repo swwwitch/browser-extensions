@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>スクリーンショット用のページ（Page Navigator）</title>
+<!--
+  ストアのスクリーンショット（1280×800）を作るためのページ。tools/screenshots.sh が ?shot=rail などを付けてヘッドレスの Chrome で開き、画面を保存する。
+  content.js をそのまま読み込み、chrome.storage は下の仮のもので置き換える。shot ごとに、マウスを載せた状態・キーを押した状態を作る
+-->
+<style>
+  :root{--ink:#1d2a36;--muted:#5d6b77;--line:#dfe5ea}
+  *{box-sizing:border-box}
+  body{margin:0;background:#f6f8fa;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;line-height:1.85}
+  .bar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);height:60px;display:flex;align-items:center;padding:0 40px;gap:28px;font-weight:700}
+  .bar span{font-size:15px;color:var(--muted);font-weight:600}
+  .logo{font-size:18px;letter-spacing:.02em}
+  main{max-width:820px;margin:0 auto;padding:40px 40px 160px;background:#fff;min-height:100vh}
+  h1{font-size:32px;line-height:1.5;margin:0 0 12px}
+  .lead{color:var(--muted);margin:0 0 32px}
+  h2{font-size:24px;margin:56px 0 12px;padding-top:12px;border-top:1px solid var(--line)}
+  h3{font-size:18px;margin:28px 0 8px}
+  p{margin:0 0 16px}
+  .fig{height:220px;border-radius:10px;margin:20px 0 24px;background:linear-gradient(135deg,#cfe3f5,#e9d3df)}
+  .fig.b{background:linear-gradient(135deg,#e2ecd5,#cfe3f5);height:180px}
+  ul{margin:0 0 16px;padding-left:1.4em}
+  .cap{position:fixed;z-index:2147483647;left:50%;bottom:28px;transform:translateX(-50%);background:#1d2a36;color:#fff;border-radius:14px;padding:16px 26px;font-size:21px;font-weight:700;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.25);white-space:nowrap}
+  .cap small{display:block;font-size:14px;font-weight:500;opacity:.85}
+</style>
+</head>
+<body>
+<header class="bar"><span class="logo">Design Notes</span><span>記事</span><span>特集</span><span>About</span></header>
+<main id="main">
+  <h1>長いページを、迷わず読むための見出しの付け方</h1>
+  <p class="lead">見出しは、読む人にとっての地図です。ページの全体を見渡し、読みたいところへすぐ移れるように、見出しの付け方と並べ方を考えます。</p>
+  <div class="fig"></div>
+  <h2>はじめに：見出しは地図になる</h2>
+  <p>長いページを読むとき、私たちはまず見出しを拾い読みして、全体の流れをつかみます。見出しが内容を言い当てていれば、読む人は迷わずに目的の場所へたどり着けます。</p>
+  <p>反対に、見出しがあいまいだと、何度もスクロールを行き来することになります。ページの長さよりも、見出しの質が読みやすさを左右します。</p>
+  <h3>拾い読みされる前提で書く</h3>
+  <p>見出しだけを続けて読んでも話がつながるように書くと、ページの骨組みがはっきりします。</p>
+  <h2>見出しの階層をそろえる</h2>
+  <p>大見出し・中見出し・小見出しの役割を決め、同じ重さの内容には同じ階層を使います。階層が乱れると、読む人は今どこにいるのかを見失います。</p>
+  <ul><li>ページの題名は1つだけ</li><li>大きな区切りは中見出し</li><li>中見出しの中の話題は小見出し</li></ul>
+  <h3>階層を飛ばさない</h3>
+  <p>中見出しの次に、いきなり小さな見出しを置かないようにします。</p>
+  <div class="fig b"></div>
+  <h2>見出しの言葉を選ぶ</h2>
+  <p>「概要」「その他」のような言葉より、「料金と支払い方法」「よくある失敗と対処」のように、中身が分かる言葉を選びます。</p>
+  <p>検索や目次で見出しだけが表示される場面でも、内容が伝わるかを確かめます。</p>
+  <h3>短く、具体的に</h3>
+  <p>1行に収まる長さを目安にし、主語と結論が分かるようにします。</p>
+  <h2>本文の長さと区切り</h2>
+  <p>1つの欄が長くなりすぎたら、小見出しで区切ります。画面1〜2枚分ごとに見出しがあると、移動の目印になります。</p>
+  <p>図や表は、説明している文のすぐ近くに置きます。</p>
+  <div class="fig"></div>
+  <h2>目次とページ内のリンク</h2>
+  <p>見出しが多いページでは、冒頭に目次を置きます。目次から各見出しへ移れるようにし、読んだあとに目次へ戻れる道も用意します。</p>
+  <h3>今いる場所を示す</h3>
+  <p>読んでいる欄を目次の上で示すと、全体の中の位置がつかみやすくなります。</p>
+  <h2>スマートフォンでの見え方</h2>
+  <p>画面が狭いと、見出しの間隔が長く感じられます。見出しの文字の大きさと余白を調整し、拾い読みしやすくします。</p>
+  <p>固定のヘッダーが見出しを隠さないように、移動したときの止まる位置にも気を配ります。</p>
+  <h2>見直しのチェックリスト</h2>
+  <ul><li>見出しだけで流れが分かるか</li><li>階層がそろっているか</li><li>見出しの言葉が具体的か</li><li>長い欄を小見出しで区切ったか</li></ul>
+  <div class="fig b"></div>
+  <h2>まとめ</h2>
+  <p>見出しは、ページの地図であり、移動の手すりです。読む人の目線で見出しを整えると、長いページでも迷わずに読み進められます。</p>
+  <p>次に記事を書くときは、見出しだけを先に並べて、話の流れを確かめるところから始めてみてください。</p>
+</main>
+<div class="cap" id="cap" hidden></div>
+<script>
+  // chrome.storage の代わり（設定は既定値）
+  window.chrome = { storage: { sync: { get: (d, cb) => cb(d), set() {} }, onChanged: { addListener() {} } } };
+</script>
+<script src="../content.js"></script>
+<script>
+  const shot = new URLSearchParams(location.search).get('shot') || 'rail';
+  const CAPS = {
+    rail: ['エレベーター', 'ページの左端に見出しの目盛り。押すとその見出しへ'],
+    minimap: ['ミニマップ', '右端にマウスを寄せると、ページ全体の縮図。ドラッグで移動'],
+    jump: ['見出しのジャンプ', '⌘⌥↓ / ⌘⌥↑ で次・前の見出しへ（Windows は Alt+Shift+↓ / ↑）'],
+    edge: ['上下の帯', '画面の上端・下端にマウスを寄せると、先頭・末尾へ'],
+  };
+  const cap = document.getElementById('cap');
+  const [t, s] = CAPS[shot] || CAPS.rail; cap.innerHTML = t + '<small>' + s + '</small>'; cap.hidden = false;
+  const root = () => document.querySelector('page-navigator-root').shadowRoot;
+  const h2 = [...document.querySelectorAll('main h2')];
+  const go = y => { document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, y); };
+  setTimeout(() => {
+    const sh = root();
+    const style = document.createElement('style'); style.textContent = '.tick.demo .label{display:block}.tick.demo::before{width:18px;opacity:.95;background:#0076b5}.toast{transition:none}.toast.keep{opacity:1!important}'; sh.append(style);
+    if (shot === 'rail') {
+      go(h2[2].getBoundingClientRect().top + scrollY - 80);
+      setTimeout(() => { const ticks = [...sh.querySelectorAll('.tick:not(.sub)')]; ticks[4]?.classList.add('demo'); }, 300);
+    } else if (shot === 'minimap') {
+      go(h2[3].getBoundingClientRect().top + scrollY - 80);
+      setTimeout(() => window.dispatchEvent(new MouseEvent('mousemove', { clientX: document.documentElement.clientWidth - 4, clientY: 300 })), 300);
+    } else if (shot === 'jump') {
+      go(h2[1].getBoundingClientRect().top + scrollY - 76);
+      setTimeout(() => { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', metaKey: true, altKey: true, bubbles: true })); sh.querySelector('.toast').classList.add('keep'); }, 300);
+    } else if (shot === 'edge') {
+      go(document.documentElement.scrollHeight * 0.55);
+      setTimeout(() => window.dispatchEvent(new MouseEvent('mousemove', { clientX: 640, clientY: 2 })), 300);
+    }
+  }, 300);
+</script>
+</body>
+</html>

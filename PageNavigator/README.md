@@ -49,6 +49,8 @@
 | Firefox | `PageNavigator-firefox-版.zip` | addons.mozilla.org への提出（manifest に Firefox 用の ID を足す） |
 | Safari | `Page Navigator.app`・`PageNavigator-safari-版.zip` | Xcode のプロジェクト（`safari/`）の Resources を同期してビルド・署名 |
 
+Chrome ウェブストアへの提出の手順・掲載情報・権限の説明は `store/LISTING.md`、スクリーンショット（1280×800）とプロモーション タイル（440×280）は `store/` にあります（スクリーンショットは `node tools/screenshots.mjs` で作り直せます）。
+
 版は `manifest.json` の `version` だけを書き換えます（Firefox の manifest と Safari のアプリの版は、書き出すときにそろえます）。
 
 ### 制限
