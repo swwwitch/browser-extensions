@@ -18,7 +18,7 @@
 **概要**（132文字まで。manifest の description がそのまま使われる）：
 どのページでも、エレベーター（左端の見出しの目盛り）・ミニマップ（右端）・上下の帯・見出しのジャンプで移動できます。
 
-**カテゴリ**：仕事効率化（Productivity）
+**カテゴリ**：Functionality & UI（「Chrome をカスタマイズ」の区分。無ければ Productivity の Tools）
 
 **言語**：日本語
 
