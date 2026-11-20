@@ -16,7 +16,7 @@
 
 **名前**：Page Navigator
 
-**アドオンの URL**：`page-navigator`（https://addons.mozilla.org/firefox/addon/page-navigator/ 。使われていたら `page-navigator-headings` など）
+**アドオンの URL**：`page-navigator-headings`（https://addons.mozilla.org/firefox/addon/page-navigator-headings/ 。`page-navigator` は他のアドオンが使用済み）
 
 **概要**（250文字まで）：
 どのページでも、エレベーター（左端の見出しの目盛り）・ミニマップ（右端）・上下の帯・見出しのジャンプ（⌘⌥↓↑／Alt+Shift+↓↑）で、長いページを見出しを手がかりに移動できます。
@@ -36,7 +36,7 @@
 **プライバシー ポリシー**：データを集めないので任意。入れるなら `PRIVACY.md` の内容を貼る。
 
 **画像**
-- アイコン：zip の中の `icons/icon128.png`（64×64 以上なら自動で使われる）
+- アイコン：`icons/icon128.png` を［製品ページを編集］→［メディア］で読み込む（zip の中のアイコンは自動では使われず、パズルのピースのままになる）
 - スクリーンショット：`store/screenshots/` の rail・minimap・jump・edge（1280×800）
 
 **審査担当者へのメモ**（Notes to Reviewer）：
